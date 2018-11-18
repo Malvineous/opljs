@@ -1,0 +1,27 @@
+{
+  "name": "opl",
+  "version": "1.0.0",
+  "description": "Yamaha OPL2/3 FM synth chip emulator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Malvineous/opljs.git"
+  },
+  "keywords": [
+    "adlib",
+    "sbfmdrv",
+    "opl2",
+    "opl3",
+    "dro",
+    "sb16"
+  ],
+  "author": "Adam Nielsen <malvineous@shikadi.net>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Malvineous/opljs/issues"
+  },
+  "homepage": "https://github.com/Malvineous/opljs#readme"
+}

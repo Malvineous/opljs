@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/Malvineous/opljs/issues"
   },
-  "homepage": "https://github.com/Malvineous/opljs#readme"
+  "homepage": "https://github.com/Malvineous/opljs#readme",
+  "devDependencies": {
+    "express": "^4.16.4"
+  }
 }

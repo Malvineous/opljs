@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const Loader = require('./lib/opl.js');
+const Loader = (typeof module !== 'undefined') ? require('./lib/opl.js') : opl;
 
 // 16-bit samples take up two bytes each.
 const SIZEOF_INT16 = 2;
@@ -104,7 +104,13 @@ class OPL
 	 *   Number of samples to generate.  Minimum is 2 and maximum is 512, both
 	 *   limitations imposed by the emulator itself.
 	 *
-	 * @return {Buffer} containing the samples produced.
+	 * @param {Object} format
+	 *   Which kind of TypedArray to use when returning the data.  Defaults to
+	 *   Uint8Array for byte-level access, but you can supply Int16Array if you
+	 *   want to access individual samples by index.
+	 *
+	 * @return {Uint8Array} (or other typed array if 'format' was specified)
+	 *   containing the samples produced.
 	 *
 	 * @note Each generate() call places data into the same buffer, so you must
 	 * use the data (or make a copy of it) before the next call to generate().
@@ -112,12 +118,12 @@ class OPL
 	 * long after the function returns.  If you don't copy the buffer in these
 	 * cases, the function will end up working with the wrong set of samples.
 	 */
-	generate(numSamples) {
+	generate(numSamples, format = Uint8Array) {
 		this.opl.generate(numSamples);
 
 		// Return a view of the C++ heap where the generated samples were just
 		// placed.  No data gets copied here.
-		return Buffer.from(
+		return new format(
 			this.s16array.buffer,
 			this.s16array.byteOffset,
 			numSamples * this.channelCount * SIZEOF_INT16
@@ -140,4 +146,6 @@ class OPL
 	}
 }
 
-module.exports = OPL;
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = OPL;
+}

@@ -21,6 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import OPL from '@malvineous/opl'
+
 let AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx = new AudioContext();
 let source = audioCtx.createBufferSource();

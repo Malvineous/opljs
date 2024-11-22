@@ -7,12 +7,17 @@
 			.mute { background-color: #ffcccc; }
 			.play { background-color: #ccffcc; }
 		</style>
+		<script type="importmap">
+		  {
+		    "imports": {
+		      "@malvineous/opl": "./opl3/index.js"
+		    }
+		  }
+		</script>
 	</head>
 	<body>
 		<button id="play">Play</button>
 		<button id="pause">Pause</button>
-		<script type="text/javascript" src="../lib/opl.js"></script>
-		<script type="text/javascript" src="../index.js"></script>
 		<div id="progress">-</div>
 		<button id="ch0">0</button>
 		<button id="ch1">1</button>
@@ -29,6 +34,6 @@
 		<button id="p2">TT</button>
 		<button id="p3">SD</button>
 		<button id="p4">BD</button>
-		<script type="text/javascript" src="demo-web.js"></script>
+		<script type="module" src="./demo-web.js"></script>
 	</body>
 </html>

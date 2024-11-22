@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const Loader = (typeof module !== 'undefined') ? require('./lib/opl.js') : opl;
+import Loader from './lib/opl3-wasm.mjs'
 
 // 16-bit samples take up two bytes each.
 const SIZEOF_INT16 = 2;
@@ -38,7 +38,7 @@ const MAX_BUFFER = 512 * 2 * SIZEOF_INT16;
  * @property {Number} channelCount
  *   Number of channels set during creation.  1 for mono, 2 for stereo.
  */
-class OPL
+export default class OPL
 {
 	/**
 	 * Private constructor.  Use OPL.create() instead.
@@ -146,6 +146,3 @@ class OPL
 	}
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-	module.exports = OPL;
-}

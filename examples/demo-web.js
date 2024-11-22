@@ -25,99 +25,105 @@
 
 import OPL from '@malvineous/opl'
 
-let AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioCtx = new AudioContext();
-let source = audioCtx.createBufferSource();
-let scriptNode = audioCtx.createScriptProcessor(8192, 2, 2);
-
-// When the buffer source stops playing, disconnect everything
-source.onended = () => {
-	console.log('source.onended()');
-	source.disconnect(scriptNode);
-	scriptNode.disconnect(audioCtx.destination);
-	scriptNode = null;
-	source = null;
-}
-
-console.log('Sample rate', audioCtx.sampleRate);
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
 let mute = [], muteperc = 0;
 
 // download imf file
 const imf = new Uint8Array(await fetch('demo.imf').then(r => r.arrayBuffer()));
 
-const samplesPerTick = Math.round(audioCtx.sampleRate / 560);
+function setup() {
+	audioCtx = new AudioContext();
+	let source = audioCtx.createBufferSource();
+	let scriptNode = audioCtx.createScriptProcessor(8192, 2, 2);
 
-console.log('Init WASM');
-OPL.create(audioCtx.sampleRate).then(opl => {
-	console.log('WASM init done');
+	// When the buffer source stops playing, disconnect everything
+	source.onended = () => {
+		console.log('source.onended()');
+		source.disconnect(scriptNode);
+		scriptNode.disconnect(audioCtx.destination);
+		scriptNode = null;
+		source = null;
+	}
 
-	let p = 0;
-	let lenGen = 0;
-	scriptNode.onaudioprocess = audioProcessingEvent => {
-		var b = audioProcessingEvent.outputBuffer;
+	console.log('Sample rate', audioCtx.sampleRate);
 
-		var c0 = b.getChannelData(0);
-		var c1 = b.getChannelData(1);
+	const samplesPerTick = Math.round(audioCtx.sampleRate / 560);
 
-		let lenFill = b.length;
-		let posFill = 0;
+	console.log('Init WASM');
+	OPL.create(audioCtx.sampleRate).then(opl => {
+		console.log('WASM init done');
 
-		while (posFill < lenFill) {
-			// Fill any leftover delay from the last buffer-fill event first
-			while (lenGen > 0) {
-				if (lenFill - posFill < 2) {
-					// No more space in buffer
-					return;
-				}
-				let lenNow = Math.max(2, Math.min(512, lenGen, lenFill - posFill));
-				const samples = opl.generate(lenNow, Int16Array);
-				//const samples = new Int16Array(s);
-				for (let i = 0; i < lenNow; i++) {
-					c0[posFill] = samples[i * 2 + 0] / 32768.0;
-					c1[posFill] = samples[i * 2 + 1] / 32768.0;
-					posFill++;
-				}
-				lenGen -= lenNow;
-			}
+		let p = 0;
+		let lenGen = 0;
+		scriptNode.onaudioprocess = audioProcessingEvent => {
+			var b = audioProcessingEvent.outputBuffer;
 
-			let delay;
-			do {
-				// Read the song event
-				const reg = imf[p + 0];
-				let val = imf[p + 1];
-				delay = imf[p + 2] | (imf[p + 3] << 8);
+			var c0 = b.getChannelData(0);
+			var c1 = b.getChannelData(1);
 
-				// Force the 'note-on' bit off, if the channel is muted
-				if ((reg & 0xF0) == 0xB0) {
-					if (reg == 0xBD) {
-						val &= ~muteperc;
-					} else if (mute[reg & 0x0F]) {
-						val &= ~0x20;
+			let lenFill = b.length;
+			let posFill = 0;
+
+			while (posFill < lenFill) {
+				// Fill any leftover delay from the last buffer-fill event first
+				while (lenGen > 0) {
+					if (lenFill - posFill < 2) {
+						// No more space in buffer
+						return;
 					}
-				}// else console.log(reg.toString(16), (reg & 0xF0).toString(16), (reg & 0xF0);
-				opl.write(reg, val);
-
-				// Advance to the next event in the song
-				p += 4;
-				if (p >= imf.length) {
-					console.log('Looping');
-					p = 0; // loop
+					let lenNow = Math.max(2, Math.min(512, lenGen, lenFill - posFill));
+					const samples = opl.generate(lenNow, Int16Array);
+					//const samples = new Int16Array(s);
+					for (let i = 0; i < lenNow; i++) {
+						c0[posFill] = samples[i * 2 + 0] / 32768.0;
+						c1[posFill] = samples[i * 2 + 1] / 32768.0;
+						posFill++;
+					}
+					lenGen -= lenNow;
 				}
-			} while (!delay);
 
-			document.getElementById('progress').firstChild.nodeValue = Math.round(p / imf.length * 100) + '%';
-			lenGen += delay * samplesPerTick;
-		}
-	};
+				let delay;
+				do {
+					// Read the song event
+					const reg = imf[p + 0];
+					let val = imf[p + 1];
+					delay = imf[p + 2] | (imf[p + 3] << 8);
 
-	scriptNode.connect(audioCtx.destination);
-	source.connect(scriptNode);
-	source.start();
-	audioCtx.suspend();
-	console.log('Ready');
-});
+					// Force the 'note-on' bit off, if the channel is muted
+					if ((reg & 0xF0) == 0xB0) {
+						if (reg == 0xBD) {
+							val &= ~muteperc;
+						} else if (mute[reg & 0x0F]) {
+							val &= ~0x20;
+						}
+					}// else console.log(reg.toString(16), (reg & 0xF0).toString(16), (reg & 0xF0);
+					opl.write(reg, val);
+
+					// Advance to the next event in the song
+					p += 4;
+					if (p >= imf.length) {
+						console.log('Looping');
+						p = 0; // loop
+					}
+				} while (!delay);
+
+				document.getElementById('progress').firstChild.nodeValue = Math.round(p / imf.length * 100) + '%';
+				lenGen += delay * samplesPerTick;
+			}
+		};
+
+		scriptNode.connect(audioCtx.destination);
+		source.connect(scriptNode);
+		source.start();
+		console.log('Ready');
+	});
+}
 
 document.getElementById('play').onclick = () => {
+	if (!audioCtx) {
+		setup();
+	}
 	audioCtx.resume();
 	console.log('Play');
 };

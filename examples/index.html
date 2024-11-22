@@ -35,5 +35,26 @@
 		<button id="p3">SD</button>
 		<button id="p4">BD</button>
 		<script type="module" src="./demo-web.js"></script>
+
+
+	<p>
+			Here is a simpler example:<br/>
+			<audio controls loop src="" id="aud"></audio>
+	</p>
+		<script type="module">
+			import OPL from '@malvineous/opl'
+
+			const aud = document.getElementById('aud')
+
+			// download imf file
+			const imf = new Uint8Array(await fetch('demo.imf').then(r => r.arrayBuffer()));
+
+			// convert imf bytes to wav
+			const opl = await OPL.create()
+			const bytes = await opl.wave(imf)
+
+			// set audio src to wav file
+			aud.src=URL.createObjectURL(new Blob([bytes], { 'type' : 'audio/wav; codecs=0' }))
+		</script>
 	</body>
 </html>

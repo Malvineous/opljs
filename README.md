@@ -52,9 +52,8 @@ interface with the OPL emulator.
 
 The web example may not work if loading the HTML file directly, as some browsers
 do not like loading WebAssembly files from `file://` URLs.  To run this example,
-you can either upload it somewhere or use Node to run `serve-demo-web.js` which
-will use ExpressJS to host the necessary files.  You may need to run
-`npm install --dev` to get ExpressJS installed first.
+you can either upload it somewhere or use Node to run `npm start` which
+will run a static web-server to host the necessary files.
 
 ## Limitations
 

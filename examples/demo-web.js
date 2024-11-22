@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// This shows a more complx loading, so you can mute things, but you can also use .wave() (see demo-node.js)
+// This shows a more complex loading, so you can mute things, but you can also use .wave() (see demo-node.js)
 
 import OPL from '@malvineous/opl'
 

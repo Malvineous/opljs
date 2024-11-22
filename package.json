@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Yamaha OPL2/3 FM synth chip emulator",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "emcc --bind -std=c++11 -O3 -I src -o lib/opl.js -s SINGLE_FILE -Wno-switch -s EXPORT_NAME=\"opl\" -s INVOKE_RUN=0 -s MODULARIZE=1 -s FILESYSTEM=0 -s NODEJS_CATCH_EXIT=0 -s ALLOW_MEMORY_GROWTH=0 -s TOTAL_STACK=8192 -s TOTAL_MEMORY=65536 src/dbopl.cpp src/index.cpp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "emcc --bind -std=c++11 -O3 -I src -o lib/opl3-wasm.mjs -Wno-switch -s SINGLE_FILE -s INVOKE_RUN=0 -s MODULARIZE=1 -s FILESYSTEM=0 -s NODEJS_CATCH_EXIT=0 -s ALLOW_MEMORY_GROWTH=0 -s TOTAL_STACK=8192 -s TOTAL_MEMORY=65536 src/dbopl.cpp src/index.cpp",
+    "start": "npx -y live-server examples --mount=/opl3/index.js:./index.js --mount=/opl3/lib/opl3-wasm.mjs:./lib/opl3-wasm.mjs"
   },
   "repository": {
     "type": "git",
@@ -26,10 +27,8 @@
   },
   "homepage": "https://github.com/Malvineous/opljs#readme",
   "devDependencies": {
-    "express": "^4.16.4"
   },
   "directories": {
-    "example": "examples",
     "lib": "lib"
   },
   "dependencies": {}

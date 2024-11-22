@@ -1,3 +1,3 @@
-lib/opl.js
-lib/opl.wasm
+lib/opl3-wasm.mjs
 node_modules
+.DS_Store

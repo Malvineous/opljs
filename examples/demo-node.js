@@ -20,8 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const fs = require('fs');
-const OPL = require('../index.js');
+import fs from 'fs'
+import OPL from '../index.js'
 
 const filename = process.argv[2];
 const outputFilename = process.argv[3];

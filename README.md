@@ -18,7 +18,7 @@ for the browser (using `<script/>`).
 npm install @malvineous/opl
 ```
 
-You can also use it on he web, with a CDN:
+You can also use it on the web, with a CDN:
 
 ```html
 <script type="importmap">

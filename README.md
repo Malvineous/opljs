@@ -14,18 +14,36 @@ Example code is provided, both for the Node environment (with `require()`) and
 for the browser (using `<script/>`).
 
 ## Installation
+```
+npm install @malvineous/opl
+```
 
-    npm install @malvineous/opl
+You can also use it on he web, with a CDN:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "@malvineous/opl": "https://esm.sh/@malvineous/opl"
+    }
+  }
+</script>
+<script type="module">
+import OPL from '@malvineous/opl'
+</script>
+```
 
 ## Use
 
-    const OPL = require('@malvineous/opl');
+```js
+const OPL = require('@malvineous/opl');
 
-    OPL.create().then(opl => {
-        opl.write(0xBD, 0x20);
-        const samples = opl.generate(512);
-        // samples now contains 512 16-bit stereo samples as a Uint8Array
-    });
+OPL.create().then(opl => {
+    opl.write(0xBD, 0x20);
+    const samples = opl.generate(512);
+    // samples now contains 512 16-bit stereo samples as a Uint8Array
+});
+```
 
 ## Examples
 
@@ -59,6 +77,8 @@ to install `emscripten` in order to compile the C++ code into Javascript.
 
 Once `emscripten` is installed, run:
 
-    npm run build
+```
+npm run build
+```
 
 This will compile the C++ code in `src/` and put the compiled files into `lib/`.

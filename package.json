@@ -4,7 +4,7 @@
   "description": "Yamaha OPL2/3 FM synth chip emulator",
   "main": "index.js",
   "scripts": {
-    "build": "emcc --bind -std=c++11 -O3 -I src -o lib/opl.js -Wno-switch -s EXPORT_NAME=\"opl\" -s INVOKE_RUN=0 -s MODULARIZE=1 -s FILESYSTEM=0 -s NODEJS_CATCH_EXIT=0 -s ALLOW_MEMORY_GROWTH=0 -s TOTAL_STACK=8192 -s TOTAL_MEMORY=65536 src/dbopl.cpp src/index.cpp",
+    "build": "emcc --bind -std=c++11 -O3 -I src -o lib/opl.js -s SINGLE_FILE -Wno-switch -s EXPORT_NAME=\"opl\" -s INVOKE_RUN=0 -s MODULARIZE=1 -s FILESYSTEM=0 -s NODEJS_CATCH_EXIT=0 -s ALLOW_MEMORY_GROWTH=0 -s TOTAL_STACK=8192 -s TOTAL_MEMORY=65536 src/dbopl.cpp src/index.cpp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -36,7 +36,7 @@ import OPL from '@malvineous/opl'
 ## Use
 
 ```js
-const OPL = require('@malvineous/opl');
+import OPL from '@malvineous/opl';
 
 OPL.create().then(opl => {
     opl.write(0xBD, 0x20);

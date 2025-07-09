@@ -21,7 +21,10 @@
     "dro",
     "sb16"
   ],
-  "author": "Adam Nielsen <malvineous@shikadi.net>",
+  "contributors": [
+    "Adam Nielsen <malvineous@shikadi.net>",
+    "David Konsumer <konsumer@jetboystudio.com>"
+  ],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/Malvineous/opljs/issues"

@@ -17,7 +17,7 @@
   </head>
   <body>
   <p>
-      Here is a simpler example:<br/>
+      Here is a simple example:<br/>
       <audio controls loop src="" id="aud"></audio>
   </p>
     <script type="module">
@@ -35,5 +35,31 @@
       // set audio src to wav file
       aud.src=URL.createObjectURL(new Blob([bytes], { 'type' : 'audio/wav; codecs=0' }))
     </script>
+
+
+    And here is a more complex example:
+
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <div id="progress">-</div>
+    <div>
+      <button id="ch0">0</button>
+      <button id="ch1">1</button>
+      <button id="ch2">2</button>
+      <button id="ch3">3</button>
+      <button id="ch4">4</button>
+      <button id="ch5">5</button>
+      <button id="ch6">6</button>
+      <button id="ch7">7</button>
+      <button id="ch8">8</button>
+    </div>
+    <div>
+      <button id="p0">HH</button>
+      <button id="p1">CY</button>
+      <button id="p2">TT</button>
+      <button id="p3">SD</button>
+      <button id="p4">BD</button>
+    </div>
+    <script type="module" src="./demo-web.js"></script>
   </body>
 </html>

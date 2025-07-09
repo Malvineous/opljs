@@ -1,6 +1,6 @@
 {
   "name": "@malvineous/opl",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Yamaha OPL2/3 FM synth chip emulator",
   "main": "index.js",
   "type": "module",

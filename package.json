@@ -29,8 +29,8 @@
   "homepage": "https://github.com/Malvineous/opljs#readme",
   "devDependencies": {
   },
-  "directories": {
-    "lib": "lib"
-  },
+  "files": [
+    "./lib/opl3-wasm.mjs"
+  ],
   "dependencies": {}
 }

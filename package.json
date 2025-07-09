@@ -7,7 +7,8 @@
   "scripts": {
     "build": "emcc --bind -std=c++11 -O3 -I src -o lib/opl3-wasm.mjs -Wno-switch -s SINGLE_FILE -s INVOKE_RUN=0 -s MODULARIZE=1 -s FILESYSTEM=0 -s NODEJS_CATCH_EXIT=0 -s ALLOW_MEMORY_GROWTH=0 -s TOTAL_STACK=8192 -s TOTAL_MEMORY=65536 src/dbopl.cpp src/index.cpp",
     "start": "npx -y live-server examples --mount=/opl3/index.js:./index.js --mount=/opl3/lib/opl3-wasm.mjs:./lib/opl3-wasm.mjs",
-    "prestart": "npm run build"
+    "prestart": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

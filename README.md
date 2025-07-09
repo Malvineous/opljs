@@ -45,15 +45,19 @@ OPL.create().then(opl => {
 });
 ```
 
+
 ## Examples
 
 In the `examples/` folder there are some short demonstrations showing how to
 interface with the OPL emulator.
 
-The web example may not work if loading the HTML file directly, as some browsers
+The web example will not work if loading the HTML file directly, as some browsers
 do not like loading WebAssembly files from `file://` URLs.  To run this example,
 you can either upload it somewhere or use Node to run `npm start` which
 will run a static web-server to host the necessary files.
+
+
+Included is `local.html` that uses the wasm built here, and `index.html` that accesses it, using the CDN (so you don't need to build it.)
 
 ## Limitations
 

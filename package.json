@@ -1,6 +1,6 @@
 {
   "name": "@malvineous/opl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yamaha OPL2/3 FM synth chip emulator",
   "main": "index.js",
   "type": "module",
@@ -27,8 +27,7 @@
     "url": "https://github.com/Malvineous/opljs/issues"
   },
   "homepage": "https://github.com/Malvineous/opljs#readme",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "files": [
     "./lib/opl3-wasm.mjs"
   ],
